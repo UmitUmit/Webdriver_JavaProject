@@ -44,6 +44,26 @@ public class HomePage {
         clickLink("JavaScript Alerts");
         return new AlertsPage(driver);
     }
+    public FileUploadPage clickFileUpload(){
+        clickLink("File Upload");
+        return new FileUploadPage(driver);
+    }
+    public EntryAdPage clickEntryAd(){
+        clickLink("Entry Ad");
+        return new EntryAdPage(driver);
+    }
+    public ContextMenuPage clickContextMenu(){
+        clickLink("Context Menu");
+        return new ContextMenuPage(driver);
+    }
+    public WYSIWYGEditorPage clickWYSIWYGEditor(){
+        clickLink("WYSIWYG Editor");
+        return new WYSIWYGEditorPage(driver);
+    }
+    public FramesPage clickFrames(){
+        clickLink("Frames");
+        return new FramesPage(driver);
+    }
    public void clickLink(String linkText){
 
         driver.findElement(By.linkText(linkText)).click();
