@@ -35,7 +35,7 @@ public class BaseTests {
         driver.manage().window().maximize();
         goHome();
         setCookie();
-        //deleteCookie();
+        //deleteCookie();/.
         printCookie();
 
 
