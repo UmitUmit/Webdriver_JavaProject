@@ -75,7 +75,7 @@ public class BaseTests {
         options.addArguments("disable-infobars"); //old chrome version
        // options.addArguments("disable-features=AutomationControlled");//latest chrome version
         //options.setHeadless(true);
-
+        //
         return options;
 
 
