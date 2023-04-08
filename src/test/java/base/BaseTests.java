@@ -1,11 +1,9 @@
 package base;
 
 import com.google.common.io.Files;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -31,28 +29,26 @@ public class BaseTests {
     @BeforeClass
     public void setUp(){
         System.setProperty("webdriver.chrome.driver","resources/chromedriver");
-        driver = new EventFiringWebDriver(new ChromeDriver());
+        driver = new EventFiringWebDriver(new ChromeDriver(getChromeOptions()));
          //Created EventReporter class that implements WebDriverEventListener in utils package, and registered events in the new class created
         driver.register(new EventReporter());
-
         driver.manage().window().maximize();
         goHome();
+        setCookie();
+        //deleteCookie();
+        printCookie();
 
-        homePage = new HomePage(driver);
+
     }
 
     @BeforeMethod
     public void goHome(){
         driver.get("https://the-internet.herokuapp.com/");
-
+        homePage = new HomePage(driver);
     }
-
     @AfterClass
     public void tearDown(){
         driver.quit();
-    }
-    public WindowManager getWindowManager(){
-        return new WindowManager(driver);
     }
 
     @AfterMethod
@@ -71,5 +67,38 @@ public class BaseTests {
         }
 
     }
+    public WindowManager getWindowManager(){
+        return new WindowManager(driver);
+    }
+    private ChromeOptions getChromeOptions(){
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("disable-infobars"); //old chrome version
+       // options.addArguments("disable-features=AutomationControlled");//latest chrome version
+        //options.setHeadless(true);
+
+        return options;
+
+
+    }
+    private void setCookie(){
+        Cookie cookie = new Cookie.Builder("tau","123")
+                .domain("the-internet.herokuapp.com")
+                .build();
+        driver.manage().addCookie(cookie);
+    }
+    private void deleteCookie(){
+        Cookie cookie = new Cookie.Builder("optimizelyBuckets","%7B%7D")
+                .domain("the-internet.herokuapp.com")
+                .build();
+        driver.manage().deleteCookie(cookie);
+    }
+    private void printCookie(){
+       var cookies = driver.manage().getCookies();
+       System.out.println("Current domain cookie size: "+cookies.size());
+       for(Cookie cookie : cookies){
+              System.out.println("Cookie name: "+cookie.getName() + " |...Cookie value: " + cookie.getValue());
+       }
+    }
+
 
 }

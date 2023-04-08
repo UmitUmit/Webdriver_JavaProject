@@ -38,9 +38,7 @@ public class EventReporter implements WebDriverEventListener {
 
     @Override
     public void afterNavigateTo(String url, WebDriver driver) {
-        System.out.println("Navigated to: " + url +
-                "\n Current window title: " + driver.getTitle() +
-                "\n Current window handle: " + driver.getWindowHandle());
+        System.out.println("Navigated to: " + url );
 
     }
 
@@ -121,7 +119,7 @@ public class EventReporter implements WebDriverEventListener {
 
     @Override
     public void afterSwitchToWindow(String windowName, WebDriver driver) {
-        System.out.println("Switched to window: " + windowName );
+        //System.out.println("Switched to window: " + windowName );
 
     }
 
